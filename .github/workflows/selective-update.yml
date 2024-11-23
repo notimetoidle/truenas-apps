@@ -6,35 +6,54 @@ on:
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  sync_and_patch:
+  update_and_patch:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout the repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Clone the target repository
+    - name: Clone truenas/apps
       run: |
-        git clone --depth 1 --filter=blob:none --sparse https://github.com/truenas/apps.git truenas-apps
-        cd truenas-apps
-        git sparse-checkout set path/to/subdir
+        set -x
+        ROOT=$(pwd)
+        git init "$ROOT/truenas-apps"
+        cd "$ROOT/truenas-apps"
+        git remote add origin https://github.com/truenas/apps.git
+        git config core.sparsecheckout true
+        cat > "$ROOT/truenas-apps/.git/info/sparse-checkout" <<EOF
+        library/*
+        migration_helpers/*
+        catalog.json
+        cspell.config.yaml
+        features_capability.json
+        trains/stable/ix-app/*
+        trains/community/linkding/*
+        trains/community/immich/*
+        trains/stable/diskoverdata/*
+        trains/stable/home-assistant/*
+        EOF
+        git pull --depth=1 origin master
 
-    - name: Copy subdirectory into the current repository
+    - name: Patch catalog.json
       run: |
-        rsync -av --delete target-repo/path/to/subdir/ local/path/to/subdir
+        set -x
+        ROOT=$(pwd)
+        pip install pyyaml
+        python "$ROOT/.github/strip_catalog.py" "$ROOT/truenas-apps"
 
-    - name: Apply patches
+    - name: Cleanup
       run: |
-        git apply patches/*.patch || echo "No patches applied"
+        set -x
+        ROOT=$(pwd)
+        mv "${ROOT}/truenas-apps/"* "${ROOT}/"
+        rm -rf "${ROOT}/truenas-apps"
 
     - name: Commit changes if there are any
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        set -x
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add .
-        git diff-index --quiet HEAD || git commit -m "Sync and patch subdirectory"
-
-    - name: Push changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        git commit -am "Workflow: update"
+        git push
