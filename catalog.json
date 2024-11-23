@@ -1,0 +1,320 @@
+{
+    "stable": {
+        "home-assistant": {
+            "app_readme": "<h1>Home Assistant</h1> <p><a href=\"https://www.home-assistant.io/\">Home Assistant</a> is an open source home automation that puts local control and privacy first.</p>",
+            "categories": [
+                "productivity"
+            ],
+            "description": "Home Assistant is an open source home automation that puts local control and privacy first.",
+            "healthy": true,
+            "healthy_error": null,
+            "home": "https://www.home-assistant.io/",
+            "location": "/__w/apps/apps/trains/stable/home-assistant",
+            "latest_version": "1.2.30",
+            "latest_app_version": "2024.11.2",
+            "latest_human_version": "2024.11.2_1.2.30",
+            "last_update": "2024-11-22 14:03:13",
+            "name": "home-assistant",
+            "recommended": false,
+            "title": "Home Assistant",
+            "maintainers": [
+                {
+                    "email": "dev@ixsystems.com",
+                    "name": "truenas",
+                    "url": "https://www.truenas.com/"
+                }
+            ],
+            "tags": [
+                "home-automation",
+                "assistant"
+            ],
+            "screenshots": [
+                "https://media.sys.truenas.net/apps/home-assistant/screenshots/screenshot1.png"
+            ],
+            "sources": [
+                "https://github.com/home-assistant/home-assistant",
+                "https://github.com/truenas/charts/tree/master/charts/home-assistant"
+            ],
+            "icon_url": "https://media.sys.truenas.net/apps/home-assistant/icons/icon.png",
+            "capabilities": [
+                {
+                    "description": "Home Assistant is able to change file ownership.",
+                    "name": "CHOWN"
+                },
+                {
+                    "description": "Home Assistant is able to change file ownership.",
+                    "name": "FOWNER"
+                },
+                {
+                    "description": "Home Assistant is able to bypass file permissions.",
+                    "name": "DAC_OVERRIDE"
+                },
+                {
+                    "description": "Home Assistant is able to bind to privileged ports.",
+                    "name": "NET_BIND_SERVICE"
+                },
+                {
+                    "description": "Home Assistant is able to use raw sockets.",
+                    "name": "NET_RAW"
+                }
+            ],
+            "run_as_context": [
+                {
+                    "description": "Home Assistant runs as root user.",
+                    "gid": 0,
+                    "group_name": "root",
+                    "uid": 0,
+                    "user_name": "root"
+                },
+                {
+                    "description": "Postgres runs as non-root user.",
+                    "gid": 999,
+                    "group_name": "postgres",
+                    "uid": 999,
+                    "user_name": "postgres"
+                }
+            ]
+        },
+        "ix-app": {
+            "app_readme": "<h1>iX App</h1> <p>iX App is designed to let user deploy a docker image in TrueNAS SCALE with a simple wizard.</p>",
+            "categories": [
+                "custom"
+            ],
+            "description": "An application for deploying simple containers.",
+            "healthy": true,
+            "healthy_error": null,
+            "home": "https://www.truenas.com/",
+            "location": "/__w/apps/apps/trains/stable/ix-app",
+            "latest_version": "1.0.14",
+            "latest_app_version": "1.0.0",
+            "latest_human_version": "1.0.0_1.0.14",
+            "last_update": "2024-11-22 14:03:13",
+            "name": "ix-app",
+            "recommended": false,
+            "title": "iX App",
+            "maintainers": [
+                {
+                    "email": "dev@ixsystems.com",
+                    "name": "truenas",
+                    "url": "https://www.truenas.com/"
+                }
+            ],
+            "tags": [],
+            "screenshots": [],
+            "sources": [],
+            "icon_url": "https://media.sys.truenas.net/apps/ix-chart/icons/icon.webp",
+            "capabilities": [],
+            "run_as_context": []
+        },
+        "diskoverdata": {
+            "app_readme": "<h1>Diskover Data</h1> <p><a href=\"https://github.com/diskoverdata/diskover-community\">Diskover Data</a> is used to monitor size/volumes of distributed dataset.</p>",
+            "categories": [
+                "monitoring"
+            ],
+            "description": "Diskover is used to monitor size/volumes of distributed dataset.",
+            "healthy": true,
+            "healthy_error": null,
+            "home": "https://github.com/diskoverdata/diskover-community",
+            "location": "/__w/apps/apps/trains/stable/diskoverdata",
+            "latest_version": "1.3.12",
+            "latest_app_version": "2.3.0",
+            "latest_human_version": "2.3.0_1.3.12",
+            "last_update": "2024-11-22 14:03:13",
+            "name": "diskoverdata",
+            "recommended": false,
+            "title": "Diskover Data",
+            "maintainers": [
+                {
+                    "email": "dev@ixsystems.com",
+                    "name": "truenas",
+                    "url": "https://www.truenas.com/"
+                }
+            ],
+            "tags": [
+                "storage",
+                "monitoring",
+                "management",
+                "discovery"
+            ],
+            "screenshots": [
+                "https://media.sys.truenas.net/apps/diskoverdata/screenshots/screenshot1.png",
+                "https://media.sys.truenas.net/apps/diskoverdata/screenshots/screenshot2.png",
+                "https://media.sys.truenas.net/apps/diskoverdata/screenshots/screenshot3.png"
+            ],
+            "sources": [
+                "https://github.com/diskoverdata/diskover-community",
+                "https://github.com/linuxserver/docker-diskover"
+            ],
+            "icon_url": "https://media.sys.truenas.net/apps/diskoverdata/icons/icon.png",
+            "capabilities": [
+                {
+                    "description": "Diskover is able to chown files.",
+                    "name": "CHOWN"
+                },
+                {
+                    "description": "Diskover is able to bypass permission checks for it's sub-processes.",
+                    "name": "FOWNER"
+                },
+                {
+                    "description": "Diskover is able to bypass permission checks.",
+                    "name": "DAC_OVERRIDE"
+                },
+                {
+                    "description": "Diskover is able to kill processes.",
+                    "name": "KILL"
+                },
+                {
+                    "description": "Diskover is able to set group ID for it's sub-processes.",
+                    "name": "SETGID"
+                },
+                {
+                    "description": "Diskover is able to set user ID for it's sub-processes.",
+                    "name": "SETUID"
+                }
+            ],
+            "run_as_context": [
+                {
+                    "description": "Diskover runs as root user.",
+                    "gid": 0,
+                    "group_name": "root",
+                    "uid": 0,
+                    "user_name": "root"
+                },
+                {
+                    "description": "Elastic Search runs as a non-root user.",
+                    "gid": 1000,
+                    "group_name": "root",
+                    "uid": 1000,
+                    "user_name": "root"
+                }
+            ]
+        }
+    },
+    "community": {
+        "immich": {
+            "app_readme": "<h1>Immich</h1> <p><a href=\"https://immich.app\">Immich</a> - Self-hosted backup solution for photos and videos on mobile device</p>",
+            "categories": [
+                "media"
+            ],
+            "description": "Immich is a self-hosted photo and video backup solution directly from your mobile phone.",
+            "healthy": true,
+            "healthy_error": null,
+            "home": "https://immich.app",
+            "location": "/__w/apps/apps/trains/community/immich",
+            "latest_version": "1.7.5",
+            "latest_app_version": "v1.121.0",
+            "latest_human_version": "v1.121.0_1.7.5",
+            "last_update": "2024-11-22 14:03:13",
+            "name": "immich",
+            "recommended": false,
+            "title": "Immich",
+            "maintainers": [
+                {
+                    "email": "dev@ixsystems.com",
+                    "name": "truenas",
+                    "url": "https://www.truenas.com/"
+                }
+            ],
+            "tags": [
+                "photos",
+                "backup"
+            ],
+            "screenshots": [],
+            "sources": [
+                "https://immich.app",
+                "https://github.com/immich-app/immich"
+            ],
+            "icon_url": "https://media.sys.truenas.net/apps/immich/icons/icon.svg",
+            "capabilities": [
+                {
+                    "description": "Immich Proxy is able to chown files.",
+                    "name": "CHOWN"
+                },
+                {
+                    "description": "Immich Proxy and Web is able to set user ID for it's sub-processes.",
+                    "name": "SETUID"
+                },
+                {
+                    "description": "Immich Proxy and Web is able to set group ID for it's sub-processes.",
+                    "name": "SETGID"
+                }
+            ],
+            "run_as_context": [
+                {
+                    "description": "Immich runs as root user.",
+                    "gid": 0,
+                    "group_name": "root",
+                    "uid": 0,
+                    "user_name": "root"
+                },
+                {
+                    "description": "Postgres runs as non-root user.",
+                    "gid": 999,
+                    "group_name": "postgres",
+                    "uid": 999,
+                    "user_name": "postgres"
+                },
+                {
+                    "description": "Redis runs as a non-root user and root group.",
+                    "gid": 0,
+                    "group_name": "root",
+                    "uid": 1001,
+                    "user_name": "redis"
+                }
+            ]
+        },
+        "linkding": {
+            "app_readme": "<h1>Linkding</h1> <p><a href=\"https://github.com/sissbruecker/linkding\">Linkding</a> is a bookmark manager that you can host yourself.</p>",
+            "categories": [
+                "productivity"
+            ],
+            "description": "Linkding is a bookmark manager that you can host yourself.",
+            "healthy": true,
+            "healthy_error": null,
+            "home": "https://github.com/sissbruecker/linkding",
+            "location": "/__w/apps/apps/trains/community/linkding",
+            "latest_version": "1.1.0",
+            "latest_app_version": "1.36.0",
+            "latest_human_version": "1.36.0_1.1.0",
+            "last_update": "2024-11-22 14:03:13",
+            "name": "linkding",
+            "recommended": false,
+            "title": "Linkding",
+            "maintainers": [
+                {
+                    "email": "dev@ixsystems.com",
+                    "name": "truenas",
+                    "url": "https://www.truenas.com/"
+                }
+            ],
+            "tags": [
+                "bookmark"
+            ],
+            "screenshots": [
+                "https://media.sys.truenas.net/apps/linkding/screenshots/screenshot1.png"
+            ],
+            "sources": [
+                "https://github.com/sissbruecker/linkding",
+                "https://hub.docker.com/r/sissbruecker/linkding/"
+            ],
+            "icon_url": "https://media.sys.truenas.net/apps/linkding/icons/icon.svg",
+            "capabilities": [],
+            "run_as_context": [
+                {
+                    "description": "Linkding runs as any non-root user.",
+                    "gid": 568,
+                    "group_name": "linkding",
+                    "uid": 568,
+                    "user_name": "linkding"
+                },
+                {
+                    "description": "Postgres runs as non-root user.",
+                    "gid": 999,
+                    "group_name": "postgres",
+                    "uid": 999,
+                    "user_name": "postgres"
+                }
+            ]
+        }
+    }
+}
