@@ -10,56 +10,72 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v4
 
-    - name: Checkout truenas/apps
-      uses: actions/checkout@v4
-      with:
-        repository: truenas/apps
-        ref: master
-        path: truenas-apps
-        sparse-checkout-cone-mode: false
-        sparse-checkout: |
-          library/*
-          migration_helpers/*
-          catalog.json
-          cspell.config.yaml
-          features_capability.json
-          trains/stable/ix-app/*
-          trains/community/linkding/*
-          trains/community/immich/*
-          trains/stable/diskoverdata/*
-          trains/stable/home-assistant/*
+      - name: Checkout truenas/apps
+        uses: actions/checkout@v4
+        with:
+          repository: truenas/apps
+          ref: master
+          path: truenas-apps
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            library/*
+            migration_helpers/*
+            catalog.json
+            cspell.config.yaml
+            features_capability.json
+            trains/stable/ix-app/*
+            trains/community/linkding/*
+            trains/community/immich/*
+            trains/stable/diskoverdata/*
+            trains/stable/home-assistant/*
 
-    - name: Patch catalog.json
-      run: |
-        set -x
-        ROOT=$(pwd)
-        pip install pyyaml
-        python "$ROOT/.github/strip_catalog.py" "$ROOT/truenas-apps"
+      - name: Patch catalog.json
+        run: |
+          set -x
+          ROOT=$(pwd)
+          python "$ROOT/.github/strip_catalog.py" "$ROOT/truenas-apps"
 
-    - name: Cleanup
-      run: |
-        set -x
-        ROOT=$(pwd)
+      - name: Add labels to app installs
+        run: |
+          set -x
+          ROOT=$(pwd)
+          python "$ROOT/.github/add_labels.py" "$ROOT/truenas-apps/trains"
 
-        for f in catalog.json cspell.config.yaml features_capability.json; do
-          cp -f "$ROOT/truenas-apps/$f" "$ROOT/$f"
-        done
+      - name: Cleanup
+        id: cleanup
+        run: |
+          set -x
+          ROOT=$(pwd)
 
-        for d in library migration_helpers trains; do
-          mkdir -p "$d"
-          rsync -vhr --delete "$ROOT/truenas-apps/$d/" "$ROOT/$d"
-        done
+          for f in catalog.json cspell.config.yaml features_capability.json; do
+            cp -f "$ROOT/truenas-apps/$f" "$ROOT/$f"
+          done
 
-        rm -rf "${ROOT}/truenas-apps"
+          for d in library migration_helpers trains; do
+            mkdir -p "$d"
+            rsync -vhr --delete "$ROOT/truenas-apps/$d/" "$ROOT/$d"
+          done
 
-    - name: Commit changes if there are any
-      run: |
-        set -x
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add -A
-        git diff-index --quiet HEAD || git commit -am "Workflow: update"
-        git push
+          commit_info=$(cd "${ROOT}/truenas-apps"; git log -1 --no-color)
+          echo "commit_info<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$commit_info" >> "$GITHUB_OUTPUT"
+          echo "<<EOF" >> "$GITHUB_OUTPUT"
+          rm -rf "${ROOT}/truenas-apps"
+
+      - name: Commit changes if there are any
+        run: |
+          set -x
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff-index --quiet HEAD; then
+            git commit -a -F- <<EOF
+          Workflow: update from truenas/apps
+
+          ${{ steps.cleanup.outputs.commit_info }}
+          EOF
+          fi
+          git push
