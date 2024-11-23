@@ -13,27 +13,23 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v4
 
-    - name: Clone truenas/apps
-      run: |
-        set -x
-        ROOT=$(pwd)
-        git init "$ROOT/truenas-apps"
-        cd "$ROOT/truenas-apps"
-        git remote add origin https://github.com/truenas/apps.git
-        git config core.sparsecheckout true
-        cat > "$ROOT/truenas-apps/.git/info/sparse-checkout" <<EOF
-        library/*
-        migration_helpers/*
-        catalog.json
-        cspell.config.yaml
-        features_capability.json
-        trains/stable/ix-app/*
-        trains/community/linkding/*
-        trains/community/immich/*
-        trains/stable/diskoverdata/*
-        trains/stable/home-assistant/*
-        EOF
-        git pull --depth=1 origin master
+    - name: Checkout truenas/apps
+      uses: actions/checkout@v4
+      with:
+        repository: truenas/apps
+        ref: master
+        path: truenas-apps
+        sparse-checkout: |
+          library/*
+          migration_helpers/*
+          catalog.json
+          cspell.config.yaml
+          features_capability.json
+          trains/stable/ix-app/*
+          trains/community/linkding/*
+          trains/community/immich/*
+          trains/stable/diskoverdata/*
+          trains/stable/home-assistant/*
 
     - name: Patch catalog.json
       run: |
