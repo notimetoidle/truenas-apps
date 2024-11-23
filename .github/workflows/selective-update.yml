@@ -50,7 +50,7 @@ jobs:
 
         for d in library migration_helpers trains; do
           mkdir -p "$d"
-          rsync -vhr --delete "$ROOT/truenas-apps/$d" "$ROOT/$d"
+          rsync -vhr --delete "$ROOT/truenas-apps/$d/" "$ROOT/$d"
         done
 
         rm -rf "${ROOT}/truenas-apps"
