@@ -19,6 +19,7 @@ jobs:
         repository: truenas/apps
         ref: master
         path: truenas-apps
+        sparse-checkout-cone-mode: false
         sparse-checkout: |
           library/*
           migration_helpers/*
