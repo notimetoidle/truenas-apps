@@ -43,7 +43,16 @@ jobs:
       run: |
         set -x
         ROOT=$(pwd)
-        mv "${ROOT}/truenas-apps/"* "${ROOT}/"
+
+        for f in catalog.json cspell.config.yaml features_capability.json; do
+          cp -f "$ROOT/truenas-apps/$f" "$ROOT/$f"
+        done
+
+        for d in library migration_helpers trains; do
+          mkdir -p "$d"
+          rsync -vh --delete "$ROOT/truenas-apps/$d" "$ROOT/$d"
+        done
+
         rm -rf "${ROOT}/truenas-apps"
 
     - name: Commit changes if there are any
