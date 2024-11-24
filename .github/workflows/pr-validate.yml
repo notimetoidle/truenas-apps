@@ -1,0 +1,37 @@
+name: pr-validate
+
+on:
+  #schedule:
+  #  - cron: '0 0 * * *' # Run daily at midnight UTC
+  pull_request:
+    branches:
+      - main
+      - pr-validate
+    types:
+      - opened
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Validate YAML files
+        run: |
+          find ./trains \
+            -name ix_values.yaml -or \
+            -name questions.yaml \
+            -exec yamllint "{}" ";"
+
+      - name: Validate JSON files
+        run: |
+          jq . < ./catalog.json > /dev/null
+
+      - name: Request review
+        run: |
+          gh pr edit "$PR_ID" --add-reviewer notimetoidle
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_ID: ${{ github.event.number }}
