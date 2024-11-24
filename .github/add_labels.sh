@@ -14,14 +14,15 @@ while IFS= read -r values_path; do
     fi
     mapfile -t container_names < <(grep -A 999 "consts:" "$values_path" | grep "_container_name:" | cut -d : -f 2- | tr -d " ")
     groups_line_number=$(grep -n "groups:" "$questions_path" | cut -d : -f 1)
-    cat <<EOF >> "$questions_path.new"
+    head -n "$groups_line_number" "$questions_path" | tee -a "$questions_path.new"
+    cat <<EOF | tee -a "$questions_path.new"
   - name: Labels Configuration (Generated)
     description: Configure Labels for Plex
 EOF
-    tail -n +"$(( groups_line_number + 1 ))" "$questions_path" >> "$questions_path.new"
+    tail -n +"$(( groups_line_number + 1 ))" "$questions_path" | tee -a "$questions_path.new"
     questions_line_number=$(grep -n "questions:" "$questions_path.new" | cut -d : -f 1)
-    head -n "$questions_line_number" "$questions_path.new" >> "$questions_path.new2"
-    cat <<EOF >> "$questions_path.new2"
+    head -n "$questions_line_number" "$questions_path.new" | tee -a "$questions_path.new2"
+    cat <<EOF | tee -a "$questions_path.new2"
   - variable: labels
     label: ""
     group: Labels Configuration (Generated)
@@ -58,12 +59,13 @@ EOF
                         enum:
 EOF
     for container_name in "${container_names[@]}"; do
-        cat <<EOF >> "$questions_path.new2"
+        cat <<EOF | tee -a "$questions_path.new2"
                           - value: $container_name
                             description: $container_name
 EOF
     done
-    tail -n +"$(( questions_line_number + 1 ))" "$questions_path.new" > "$questions_path.new2"
+    echo | tee -a "$questions_path.new2"
+    tail -n +"$(( questions_line_number + 1 ))" "$questions_path.new" | tee -a "$questions_path.new2"
     rm -f "$questions_path.new"
     mv "$questions_path.new2" "$questions_path"
 done < <(find "$workdir" -name "ix_values.yaml")
