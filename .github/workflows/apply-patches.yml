@@ -1,0 +1,31 @@
+name: Apply patches to apps
+
+on:
+  #schedule:
+  #  - cron: '0 0 * * *' # Run daily at midnight UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  update_and_patch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Add labels to app installs
+        run: |
+          set -x
+          ROOT=$(pwd)
+          bash "$ROOT/.github/add_labels.sh" "$ROOT/trains"
+
+      - name: Commit changes if there are any
+        run: |
+          set -x
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff-index --quiet HEAD; then
+            git commit -am "Workflow: Add labels to apps"
+          fi
+          git push

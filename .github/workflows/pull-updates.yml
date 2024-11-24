@@ -1,4 +1,4 @@
-name: Selectively pull apps from truenas/apps and run modifications
+name: Selectively pull apps from truenas/apps
 
 on:
   #schedule:
@@ -32,17 +32,11 @@ jobs:
             trains/stable/diskoverdata/*
             trains/stable/home-assistant/*
 
-      - name: Patch catalog.json
+      - name: Remove unwanted apps from catalog
         run: |
           set -x
           ROOT=$(pwd)
           python "$ROOT/.github/strip_catalog.py" "$ROOT/truenas-apps"
-
-      - name: Add labels to app installs
-        run: |
-          set -x
-          ROOT=$(pwd)
-          bash "$ROOT/.github/add_labels.sh" "$ROOT/truenas-apps/trains"
 
       - name: Cleanup
         id: cleanup
