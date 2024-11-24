@@ -63,6 +63,7 @@ jobs:
           rm -rf "${ROOT}/truenas-apps"
 
       - name: Commit changes if there are any
+        if: ${{ github.event_name != 'push' }}
         run: |
           set -x
           git config user.name "github-actions[bot]"
