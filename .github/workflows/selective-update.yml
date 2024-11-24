@@ -60,9 +60,11 @@ jobs:
           done
 
           commit_info=$(cd "${ROOT}/truenas-apps"; git log -1 --no-color)
-          echo "commit_info<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$commit_info" >> "$GITHUB_OUTPUT"
-          echo "<<EOF" >> "$GITHUB_OUTPUT"
+          {
+            echo "commit_info<<EOF"
+            echo "$commit_info"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
           rm -rf "${ROOT}/truenas-apps"
 
       - name: Commit changes if there are any
