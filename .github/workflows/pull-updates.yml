@@ -1,4 +1,4 @@
-name: Selectively pull apps from truenas/apps
+name: pull-updates
 
 on:
   #schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  update_and_patch:
+  main:
     runs-on: ubuntu-latest
 
     steps:
