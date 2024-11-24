@@ -17,7 +17,7 @@ while IFS= read -r values_path; do
     head -n "$groups_line_number" "$questions_path" | tee -a "$questions_path.new"
     cat <<EOF | tee -a "$questions_path.new"
   - name: Labels Configuration (Generated)
-    description: Configure Labels for Plex
+    description: Configure Labels
 EOF
     tail -n +"$(( groups_line_number + 1 ))" "$questions_path" | tee -a "$questions_path.new"
     questions_line_number=$(grep -n "questions:" "$questions_path.new" | cut -d : -f 1)
