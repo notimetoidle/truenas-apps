@@ -1,4 +1,6 @@
 groups:
+  - name: Labels Configuration (Generated)
+    description: Configure Labels
   - name: Home Assistant Configuration
     description: Configure Home Assistant
   - name: User and Group Configuration
@@ -11,6 +13,49 @@ groups:
     description: Configure Resources for Home Assistant
 
 questions:
+  - variable: labels
+    label: ""
+    group: Labels Configuration (Generated)
+    schema:
+      type: list
+      default: []
+      items:
+        - variable: label
+          label: Label
+          schema:
+            type: dict
+            attrs:
+              - variable: key
+                label: Key
+                schema:
+                  type: string
+                  required: true
+              - variable: value
+                label: Value
+                schema:
+                  type: string
+                  required: true
+              - variable: containers
+                label: Containers
+                description: Containers where the label should be applied
+                schema:
+                  type: list
+                  items:
+                    - variable: container
+                      label: Container
+                      schema:
+                        type: string
+                        required: true
+                        enum:
+                          - value: home-assistant
+                            description: home-assistant
+                          - value: permissions
+                            description: permissions
+                          - value: init
+                            description: init
+                          - value: postgres
+                            description: postgres
+
   - variable: TZ
     group: Home Assistant Configuration
     label: Timezone
