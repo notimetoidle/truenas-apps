@@ -42,7 +42,7 @@ jobs:
         run: |
           set -x
           ROOT=$(pwd)
-          python "$ROOT/.github/add_labels.py" "$ROOT/truenas-apps/trains"
+          bash "$ROOT/.github/add_labels.sh" "$ROOT/truenas-apps/trains"
 
       - name: Cleanup
         id: cleanup
