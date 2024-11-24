@@ -9,6 +9,9 @@ while IFS= read -r values_path; do
     questions_path="${values_path/ix_values.yaml/questions.yaml}"
     test -f "$values_path"
     test -f "$questions_path"
+    if grep -q "Labels Configuration (Generated)" "$questions_path"; then
+        continue
+    fi
     mapfile -t container_names < <(grep -A 999 "consts:" "$values_path" | grep "_container_name:" | cut -d : -f 2- | tr -d " ")
     groups_line_number=$(grep -n "groups:" "$questions_path" | cut -d : -f 1)
     cat <<EOF >> "$questions_path.new"
