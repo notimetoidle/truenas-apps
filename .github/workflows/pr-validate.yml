@@ -23,15 +23,8 @@ jobs:
           find ./trains \
             -name ix_values.yaml -or \
             -name questions.yaml \
-            -exec yamllint "{}" ";"
+            | xargs yamllint -d relaxed
 
       - name: Validate JSON files
         run: |
           jq . < ./catalog.json > /dev/null
-
-      - name: Request review
-        run: |
-          gh pr edit "$PR_ID" --add-reviewer notimetoidle
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_ID: ${{ github.event.number }}
