@@ -1,0 +1,32 @@
+name: pr-validate
+
+on:
+  #schedule:
+  #  - cron: '0 0 * * *' # Run daily at midnight UTC
+  pull_request:
+    branches:
+      - main
+      - pr-validate
+    types:
+      - opened
+      - edited
+      - ready_for_review
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Validate YAML files
+        run: |
+          find ./trains \
+            -name ix_values.yaml -or \
+            -name questions.yaml \
+            | xargs yamllint -d relaxed
+
+      - name: Validate JSON files
+        run: |
+          jq . < ./catalog.json > /dev/null
