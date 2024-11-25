@@ -9,6 +9,8 @@ on:
       - pr-validate
     types:
       - opened
+      - edited
+      - ready_for_review
 
 jobs:
   main:
